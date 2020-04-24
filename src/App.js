@@ -15,7 +15,7 @@ class App extends React.Component {
     Axios.get(this.state.url)
       .then(res => {
         this.renderRes(res.data.toString())
-        console.log("Berhasil")
+        console.log("Berhasil", res.data)
       })
       .catch(err => {
         this.renderRes(err)
