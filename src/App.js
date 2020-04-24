@@ -6,7 +6,8 @@ class App extends React.Component {
 
   state = {
     rendering: false,
-    url: ''
+    url: '',
+    message: ''
   }
 
   handleRequest = (e) => {
@@ -14,18 +15,15 @@ class App extends React.Component {
 
     Axios.get(this.state.url)
       .then(res => {
-        this.renderRes(res.data.toString())
+        const data = JSON.stringify(res.data)
+        this.setState({message: data})
         console.log("Berhasil", res.data)
       })
       .catch(err => {
-        this.renderRes(err)
         console.log("Gagal")
+        this.setState({message: err.toString()})
       })
   }
-
-  renderRes = (data) => (
-    <p> {data || ""} </p>
-  )
 
   render() {
     return (
@@ -36,7 +34,7 @@ class App extends React.Component {
           <input type="text" onChange={(e) => {this.setState({url: e.target.value})}} style={{width: 200}} placeholder="http://localhost:3001/products" />
           <button onClick={(e) => this.handleRequest(e)}>CHECK</button>
         </form>
-        {this.renderRes()}
+       <div>{this.state.message}</div>
       </div>
     );
   }
